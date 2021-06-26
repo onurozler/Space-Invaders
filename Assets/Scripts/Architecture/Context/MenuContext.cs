@@ -1,5 +1,5 @@
 using Architecture.ServiceLocator;
-using Core.Controllers;
+using Core.Controllers.Impl;
 using Core.Views.Menu;
 using UnityEngine;
 

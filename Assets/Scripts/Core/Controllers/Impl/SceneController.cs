@@ -1,6 +1,6 @@
 using UnityEngine.SceneManagement;
 
-namespace Core.Controllers
+namespace Core.Controllers.Impl
 {
     public class SceneController : ISceneController
     {

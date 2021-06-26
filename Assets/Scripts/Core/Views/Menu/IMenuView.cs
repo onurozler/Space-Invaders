@@ -6,6 +6,6 @@ namespace Core.Views.Menu
     {
         event Action OnPlayButtonPressed;
         event Action OnLeaderboardButtonPressed;
-        void FillData();
+        void FillData(int octopusScore, int crabScore, int squidScore);
     }
 }
