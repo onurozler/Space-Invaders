@@ -9,14 +9,14 @@ namespace Architecture.Context
 {
     public class CommonContext : ContextBase
     {
-        [SerializeField] private List<EnemyData> enemyDatas;
+        [SerializeField] private List<EnemyAssetData> enemyDatas;
         
         protected override bool IsCommonContext => true;
 
         protected override void InjectInstances(IServiceLocator serviceLocator)
         {
             serviceLocator.Add<ISceneController>(new SceneController());
-            serviceLocator.Add<IList<EnemyData>>(enemyDatas);
+            serviceLocator.Add<IList<EnemyAssetData>>(enemyDatas);
         }
     }
 }

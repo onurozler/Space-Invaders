@@ -21,11 +21,14 @@ namespace Architecture.Context
                 _contextServiceLocator = new ServiceLocator.ServiceLocator();
                 _contextServiceLocator.SetParent(CommonServiceLocator);
             }
-            
-            InjectInstances(IsCommonContext ? CommonServiceLocator : _contextServiceLocator);
+
+            var targetLocator = IsCommonContext ? CommonServiceLocator : _contextServiceLocator;
+            InjectInstances(targetLocator);
+            InitializeBehaviours(targetLocator);
         }
 
         protected abstract void InjectInstances(IServiceLocator serviceLocator);
+        protected virtual void InitializeBehaviours(IServiceLocator serviceLocator){}
 
         private void OnDestroy()
         {

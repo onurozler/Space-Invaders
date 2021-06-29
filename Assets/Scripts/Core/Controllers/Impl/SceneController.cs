@@ -1,16 +1,26 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Core.Controllers.Impl
 {
     public class SceneController : ISceneController
     {
+        private AsyncOperation _currentLoadOperation;
+            
+        public SceneController()
+        {
+        }
+        
         public void Load(string sceneName)
         {
-            var loadSceneAsync = SceneManager.LoadSceneAsync(sceneName);
-            loadSceneAsync.completed += operation =>
+            if (_currentLoadOperation == null || _currentLoadOperation.isDone)
             {
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
-            };
+                _currentLoadOperation = SceneManager.LoadSceneAsync(sceneName);
+                _currentLoadOperation.completed += operation =>
+                {
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+                };
+            }
         }
     }
 }

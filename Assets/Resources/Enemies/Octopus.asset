@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4596bbea60045fcad0eef99848529fc, type: 3}
   m_Name: Octopus
   m_EditorClassIdentifier: 
-  type: 2
-  scorePoint: 30
+  Sprites:
+  - {fileID: 4694393289760499848, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: -8022620209553118723, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  Type: 2
+  Score: 30

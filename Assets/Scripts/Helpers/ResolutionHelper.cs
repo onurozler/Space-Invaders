@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Managers.Enemy;
+using UnityEngine;
 
 namespace Helpers
 {
@@ -13,7 +14,10 @@ namespace Helpers
 
         private void Update()
         {
-            var currentRatio = Screen.width / (float)Screen.height;
+            //Debug.Log( mainCamera.WorldToScreenPoint(FindObjectOfType<EnemiesManager>().transform.position));
+           
+
+            /*var currentRatio = Screen.width / (float)Screen.height;
             var scaleHeight = currentRatio / targetRatio;
 
             if (scaleHeight < 1.0f)
@@ -39,7 +43,7 @@ namespace Helpers
                 rect.y = 0;
 
                 mainCamera.rect = rect;
-            }
+            }*/
         }
     }
 }

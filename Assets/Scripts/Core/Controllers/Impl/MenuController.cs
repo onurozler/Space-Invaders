@@ -12,13 +12,13 @@ namespace Core.Controllers.Impl
     {
         private readonly IMenuView _menuView;
         private readonly ISceneController _sceneController;
-        private readonly IList<EnemyData> _enemyDatas;
+        private readonly IList<EnemyAssetData> _enemyDatas;
 
         public MenuController(IServiceLocator serviceLocator)
         {
             _menuView = serviceLocator.Get<IMenuView>();
             _sceneController = serviceLocator.Get<ISceneController>();
-            _enemyDatas = serviceLocator.Get<IList<EnemyData>>();
+            _enemyDatas = serviceLocator.Get<IList<EnemyAssetData>>();
             
             _menuView.OnPlayButtonPressed += OnPlayButtonPressed;
             _menuView.OnLeaderboardButtonPressed += OnLeaderBoardButtonPressed;

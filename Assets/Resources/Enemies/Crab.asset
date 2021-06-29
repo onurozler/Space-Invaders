@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4596bbea60045fcad0eef99848529fc, type: 3}
   m_Name: Crab
   m_EditorClassIdentifier: 
-  type: 1
-  scorePoint: 20
+  Sprites:
+  - {fileID: -1079473999873960774, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: -647801311683064894, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  Type: 1
+  Score: 20

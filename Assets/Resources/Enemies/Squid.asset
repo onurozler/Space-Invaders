@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4596bbea60045fcad0eef99848529fc, type: 3}
   m_Name: Squid
   m_EditorClassIdentifier: 
-  type: 0
-  scorePoint: 10
+  Sprites:
+  - {fileID: 2207119594929711323, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: -3814946934177667163, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  Type: 0
+  Score: 10
