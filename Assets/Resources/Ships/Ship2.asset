@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535a08938e8c44b6827f27807a86d50c, type: 3}
+  m_Name: Ship2
+  m_EditorClassIdentifier: 
+  Sprite: {fileID: -778471311582434123, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  ShipType: 1
+  Color: {r: 0, g: 1, b: 0.083200455, a: 1}
+  Score: 20
+  Speed: 4

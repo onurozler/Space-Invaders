@@ -24,11 +24,11 @@ namespace Architecture.Context
 
             var targetLocator = IsCommonContext ? CommonServiceLocator : _contextServiceLocator;
             InjectInstances(targetLocator);
-            InitializeBehaviours(targetLocator);
+            InitializeMonoBehaviours(targetLocator);
         }
 
         protected abstract void InjectInstances(IServiceLocator serviceLocator);
-        protected virtual void InitializeBehaviours(IServiceLocator serviceLocator){}
+        protected virtual void InitializeMonoBehaviours(IServiceLocator serviceLocator){}
 
         private void OnDestroy()
         {

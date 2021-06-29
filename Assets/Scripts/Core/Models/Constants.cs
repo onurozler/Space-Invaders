@@ -6,13 +6,16 @@ namespace Core.Models
     {
         public static class Scene
         {
-            public static string MenuName = "MenuScene";
-            public static string GameName = "GameScene";
+            public const string MenuName = "MenuScene";
+            public const string GameName = "GameScene";
         }
 
         public static class Game
         {
             public static readonly Vector2Int Grid = new Vector2Int(11,5);
+            public const int PlayerLayer = 9;
+            public const int EnemyLayer = 8;
+            public const float BulletSpeed = 7f;
         }
 
         public static class Enemy

@@ -1,10 +1,11 @@
 using System;
+using Core.Models;
 using Core.Models.Bullet;
 using UnityEngine;
 
 namespace Core.Behaviours
 {
-    public class BulletBaseBehaviour : MonoBehaviour
+    public class BulletBehaviour : MonoBehaviour, IKillableBehaviour
     {
         [Header("Components")] 
         [SerializeField] private SpriteRenderer spriteRenderer;
@@ -14,12 +15,13 @@ namespace Core.Behaviours
         [SerializeField] private Sprite playerBullet;
         
         private Vector3 _direction;
-        private Action<BulletBaseBehaviour> _onDestroyed;
+        public event Action<BulletBehaviour> OnDestroyed;
         
-        public void Initialize(BulletType bulletType, Action<BulletBaseBehaviour> onDestroyed)
+        public void Initialize(BulletType bulletType)
         {
+            var isPlayerBullet = bulletType == BulletType.Player;
+            gameObject.layer = isPlayerBullet ? Constants.Game.PlayerLayer : Constants.Game.EnemyLayer;
             //spriteRenderer.sprite = bulletType == BulletType.Player ? playerBullet : enemyBullet;
-            _onDestroyed = onDestroyed;
         }
 
         public void SetPositionAndDirection(Vector3 origin, Vector3 direction)
@@ -30,7 +32,7 @@ namespace Core.Behaviours
         
         public void Move()
         {
-            transform.Translate(_direction * Time.deltaTime * 5);
+            transform.Translate(_direction * Time.deltaTime * Constants.Game.BulletSpeed);
 
             //  TODO : If out of screen
             // if (false)
@@ -45,9 +47,14 @@ namespace Core.Behaviours
             if (killableBehaviour != null)
             {
                 killableBehaviour.Kill();
-                gameObject.SetActive(false);
-                _onDestroyed?.Invoke(this);
+                Kill();
             }
+        }
+
+        public void Kill()
+        {
+            gameObject.SetActive(false);
+            OnDestroyed?.Invoke(this);
         }
     }
 }

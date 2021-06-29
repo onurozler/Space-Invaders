@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Helpers;
@@ -7,32 +8,32 @@ namespace Core.Models.Enemy
 {
     public class EnemyFormationData
     {
+        public event Action OnAllEnemiesDestroyed;
+        
         private static readonly int[] RowMovement = {-1, 0, 0, 1};
         private static readonly int[] ColumnMovement = { 0, -1, 1, 0 };
         
-        private readonly EnemyData[,] _enemyDatas;
         private readonly IList<Vector2Int> _shooterEnemies;
         private readonly ICollection<Vector2Int> _connectedEnemies;
-        
+        private EnemyData[,] _enemyDatas;
+
         public EnemyFormationData()
         {
-            _enemyDatas = new EnemyData[Constants.Game.Grid.x,Constants.Game.Grid.y];
             _shooterEnemies = new List<Vector2Int>();
             _connectedEnemies = new Collection<Vector2Int>();
         }
 
-        public EnemyData[,] Create()
+        public EnemyData[,] Create(int xDimension, int yDimension)
         {
-            var yDimensionLength = _enemyDatas.GetLength(1);
-            var xDimensionLength = _enemyDatas.GetLength(0);
-
-            for (int y = 0; y < yDimensionLength; y++)
+            _enemyDatas = new EnemyData[xDimension,yDimension];
+            
+            for (int y = 0; y < yDimension; y++)
             {
-                for (int x = 0; x < xDimensionLength; x++)
+                for (int x = 0; x < xDimension; x++)
                 {
                     _enemyDatas[x, y] = new EnemyData
                     {
-                        Type = (EnemyType) ((yDimensionLength - y) / 3f).FloorToClosestInt(),
+                        Type = (EnemyType) ((yDimension - y) / 3f).FloorToClosestInt(),
                         Color = Constants.Enemy.Colors.GetRandom()
                     };
                     
@@ -75,6 +76,10 @@ namespace Core.Models.Enemy
             }
             _shooterEnemies.Remove(pos);
             _enemyDatas[pos.x, pos.y] = null;
+            if (_shooterEnemies.Count == 0)
+            {
+                OnAllEnemiesDestroyed?.Invoke();
+            }
         }
 
         #region Helpers

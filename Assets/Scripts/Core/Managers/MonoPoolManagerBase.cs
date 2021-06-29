@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Core.Managers.Pool
+namespace Core.Managers
 {
-    public class MonoPoolManager : MonoBehaviour
+    public abstract class MonoPoolManagerBase : MonoBehaviour
     {
+        [Header("Run-time Instantiation")]
         [SerializeField] 
         private MonoBehaviour[] referencePoolItems;
-
+        
         [SerializeField] 
         private int initialPoolCount;
 
+        [Header("Instantiated in Scene")]
+        [SerializeField] 
+        private MonoBehaviour[] instantiatedSceneItems;
+    
         private IList<MonoBehaviour> _poolItems;
 
-        public void Initialize(Action onInitialized = null)
+        protected void InitializePool(Action onInitialized = null)
         {
             _poolItems = new List<MonoBehaviour>();
             
@@ -27,6 +32,11 @@ namespace Core.Managers.Pool
                     poolItem.gameObject.SetActive(false);
                     _poolItems.Add(poolItem);
                 }
+            }
+
+            foreach (var instantiatedSceneItem in instantiatedSceneItems)
+            {
+                _poolItems.Add(instantiatedSceneItem);
             }
             
             onInitialized?.Invoke();

@@ -1,39 +1,31 @@
 using System.Collections.Generic;
 using Architecture.ServiceLocator;
 using Core.Behaviours;
-using Core.Managers.Pool;
 using Core.Models.Bullet;
 using Helpers.Scene;
-using Helpers.Timing;
 using UnityEngine;
 
 namespace Core.Managers
 {
-    public class BulletManager : MonoBehaviour
+    public class BulletManager : MonoPoolManagerBase
     {
-        [SerializeField]
-        private MonoPoolManager bulletPool;
-
         private ISceneStateHandler _sceneStateHandler;
-        private ICollection<BulletBaseBehaviour> _activeBullets;
-        private IDictionary<BulletType, bool> _bulletRates;
-        private ITimingManager _timingManager;
+        private ICollection<BulletBehaviour> _activeBullets;
 
         public void Initialize(IServiceLocator serviceLocator)
         {
-            bulletPool.Initialize();
-            _bulletRates = new Dictionary<BulletType, bool>();
-            _activeBullets = new List<BulletBaseBehaviour>();
-            _timingManager = serviceLocator.Get<ITimingManager>();
+            InitializePool();
+            _activeBullets = new List<BulletBehaviour>();
             _sceneStateHandler = serviceLocator.Get<ISceneStateHandler>();
             _sceneStateHandler.OnUpdated += OnUpdated;
         }
         
         public void FireBullet(BulletType type ,Vector3 source, Vector3 direction)
         {
-            var bullet = bulletPool.GetItem<BulletBaseBehaviour>();
-            bullet.Initialize(type, OnBulletDestroyed);
+            var bullet = GetItem<BulletBehaviour>();
+            bullet.Initialize(type);
             bullet.SetPositionAndDirection(source,direction);
+            bullet.OnDestroyed += OnBulletDestroyed;
             _activeBullets.Add(bullet);
         }
 
@@ -45,8 +37,9 @@ namespace Core.Managers
             }
         }
         
-        private void OnBulletDestroyed(BulletBaseBehaviour bullet)
+        private void OnBulletDestroyed(BulletBehaviour bullet)
         {
+            bullet.OnDestroyed -= OnBulletDestroyed;
             _activeBullets.Remove(bullet);
         }
 

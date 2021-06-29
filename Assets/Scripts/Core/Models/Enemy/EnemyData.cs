@@ -6,6 +6,5 @@ namespace Core.Models.Enemy
     {
         public EnemyType Type;
         public Color Color;
-        public bool IsShooter;
     }
 }

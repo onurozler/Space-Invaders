@@ -1,21 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Helpers.Scene;
 using UnityEngine;
 
 namespace Helpers.Timing
 {
     public class CoroutineTimingManager : MonoBehaviour, ITimingManager
     {
-        private readonly IList<Coroutine> _activeCoroutines = new List<Coroutine>();
+        [SerializeField] 
+        private SceneStateHandler sceneStateHandler;
         
-        public Coroutine SetInterval(float interval,int loops,Action onFinished)
+        private readonly IList<Coroutine> _activeCoroutines = new List<Coroutine>();
+
+        public Coroutine SetInterval(float interval,int loops,Action onLoop,Action onFinished = null)
         {
-            var intervalCoroutine = StartCoroutine(LoopIntervalCoroutine(interval,loops,onFinished));
+            var intervalCoroutine = StartCoroutine(LoopIntervalCoroutine(interval,loops,onLoop,onFinished));
             _activeCoroutines.Add(intervalCoroutine);
             return intervalCoroutine;
         }
-
         public Coroutine SetInterval(float interval,Action onFinished)
         {
             var intervalCoroutine = StartCoroutine(IntervalCoroutine(interval, onFinished));
@@ -39,11 +42,12 @@ namespace Helpers.Timing
 
         private IEnumerator IntervalCoroutine(float interval, Action onFinished)
         {
+            yield return new WaitUntil(() => !sceneStateHandler.IsPaused);
             yield return new WaitForSeconds(interval);
             onFinished?.Invoke();
         }
 
-        private IEnumerator LoopIntervalCoroutine(float interval,int loopCount, Action onLoop)
+        private IEnumerator LoopIntervalCoroutine(float interval,int loopCount, Action onLoop, Action onFinished)
         {
             var isLoopingAlways = loopCount == -1;
             var counter = 0;
@@ -53,6 +57,8 @@ namespace Helpers.Timing
                 yield return IntervalCoroutine(interval, onLoop);
                 counter++;
             }
+            
+            onFinished?.Invoke();
         }
     }
 }

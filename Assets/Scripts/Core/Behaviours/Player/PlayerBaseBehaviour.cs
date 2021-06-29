@@ -2,6 +2,7 @@ using Architecture.ServiceLocator;
 using Core.Managers;
 using Core.Models.Bullet;
 using Core.Models.Game.Input;
+using Core.Models.Player;
 using Helpers.Scene;
 using Helpers.Timing;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace Core.Behaviours.Player
         private IGameInputData _gameInputData;
         private BulletManager _bulletManager;
         private ITimingManager _timingManager;
+        private PlayerData _playerData;
         private bool _canShoot;
         
         public void Initialize(IServiceLocator serviceLocator)
@@ -29,12 +31,15 @@ namespace Core.Behaviours.Player
             _sceneStateHandler = serviceLocator.Get<ISceneStateHandler>();
             _bulletManager = serviceLocator.Get<BulletManager>();
             _timingManager = serviceLocator.Get<ITimingManager>();
+            _playerData = serviceLocator.Get<PlayerData>();
             _canShoot = true;
             _sceneStateHandler.OnUpdated += OnUpdated;
         }
 
         private void OnUpdated()
         {
+            _playerData.Lives = Lives;
+            
             switch (_gameInputData.FirstInput)
             {
                 case InputState.Left:
@@ -55,7 +60,12 @@ namespace Core.Behaviours.Player
 
         public void Kill()
         {
-            
+            Lives--;
+            if (Lives == 0)
+            {
+                _playerData.PlayerState = PlayerState.GameOver;
+                gameObject.SetActive(false);
+            }
         }
 
         private void OnDestroy()

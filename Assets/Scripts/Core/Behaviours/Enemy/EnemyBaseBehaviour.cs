@@ -10,19 +10,22 @@ namespace Core.Behaviours.Enemy
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
-        public event Action<Vector2Int> OnEnemyKilled; 
-        private Vector2Int _position;
+        public event Action<EnemyBaseBehaviour> OnEnemyKilled; 
+        public Vector2Int Position { get; private set; }
+        public int Score { get; private set; }
 
         public void Initialize(EnemyAssetData assetData, Color color, Vector2Int position)
         {
             spriteRenderer.color = color;
             spriteRenderer.sprite = assetData.Sprites[0];
-            _position = position;
+            
+            Position = position;
+            Score = assetData.Score;
         }
 
         public void Kill()
         {
-            OnEnemyKilled?.Invoke(_position);
+            OnEnemyKilled?.Invoke(this);
         }
 
         public void DeactivateAndKillAnimation()
