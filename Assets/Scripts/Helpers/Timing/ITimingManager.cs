@@ -7,6 +7,5 @@ namespace Helpers.Timing
     {
         Coroutine SetInterval(float interval, Action onFinished);
         Coroutine SetInterval(float interval, int loops, Action onLoop,Action onFinished = null);
-        void Stop(Coroutine activeCoroutine);
     }
 }

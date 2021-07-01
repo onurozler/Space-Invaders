@@ -5,11 +5,9 @@ namespace Helpers.Scene
 {
     public class SceneStateHandler : MonoBehaviour, ISceneStateHandler
     {
-        public bool IsPaused => _isPaused;
         public event Action OnScenePaused;
         public event Action OnSceneResumed;
         public event Action OnUpdated;
-        public event Action OnUpdatedIgnoringPause;
 
         private bool _isPaused;
         
@@ -18,22 +16,19 @@ namespace Helpers.Scene
             if (!_isPaused)
             {
                 _isPaused = true;
+                Time.timeScale = 0;
                 OnScenePaused?.Invoke();
             }
             else
             {
                 _isPaused = false;
+                Time.timeScale = 1;
                 OnSceneResumed?.Invoke();
             }
         }
         
         private void Update()
         {
-            OnUpdatedIgnoringPause?.Invoke();
-            
-            if(_isPaused)
-                return;
-            
             OnUpdated?.Invoke();
         }
     }

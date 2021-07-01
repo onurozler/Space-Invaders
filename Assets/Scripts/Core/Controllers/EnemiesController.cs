@@ -7,7 +7,7 @@ using Helpers.Scene;
 using Helpers.Timing;
 using UnityEngine;
 
-namespace Core.Controllers.Impl
+namespace Core.Controllers
 {
     public class EnemiesController : IDisposable
     {

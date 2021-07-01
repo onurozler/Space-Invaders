@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Architecture.ServiceLocator;
 using Core.Behaviours.Player;
-using Core.Controllers.Impl;
+using Core.Controllers;
 using Core.Managers;
 using Core.Models.Enemy;
 using Core.Models.Game;
@@ -9,8 +9,8 @@ using Core.Models.Game.Input;
 using Core.Models.Player;
 using Core.Models.Ship;
 using Core.Views.Game;
+using Core.Views.Leaderboard;
 using Helpers.Scene;
-using Helpers.Timing;
 using UnityEngine;
 
 namespace Architecture.Context
@@ -23,13 +23,13 @@ namespace Architecture.Context
         
         [Header("Others")]
         [SerializeField] private PlayerBaseBehaviour player;
-        [SerializeField] private CoroutineTimingManager coroutineTimingManager;
         [SerializeField] private ShipsManager shipsManager;
         [SerializeField] private ShieldsManager shieldsManager;
         [SerializeField] private BulletManager bulletManager;
         [SerializeField] private EnemiesManager enemiesManager;
         [SerializeField] private SceneStateHandler sceneStateHandler;
         [SerializeField] private GameView gameView;
+        [SerializeField] private LeaderboardSubmitView leaderboardSubmitView;
         
         protected override void InjectInstances(IServiceLocator serviceLocator)
         {
@@ -38,9 +38,12 @@ namespace Architecture.Context
 #else
             serviceLocator.Add<IGameInputData>(new KeyboardInputData());
 #endif
-            serviceLocator.Add<ITimingManager>(coroutineTimingManager);
             serviceLocator.Add(new EnemyFormationData());
             serviceLocator.Add(new PlayerData());
+            
+            serviceLocator.Add<ILeaderboardSubmitView>(leaderboardSubmitView);
+            serviceLocator.Add(new LeaderboardSubmitController(serviceLocator));
+
             serviceLocator.Add(gameAssetData);
             serviceLocator.Add<ISceneStateHandler>(sceneStateHandler);
             

@@ -1,12 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
+using Core.Models;
 using Core.Models.Enemy;
+using Core.Models.Scene;
 using UnityEngine;
 
 namespace Helpers
 {
     public static class DataHelper
     {
+        public static string TypeToName(this SceneType sceneType)
+        {
+            return sceneType == SceneType.Game ? Constants.Scene.GameName : Constants.Scene.MenuName;
+        }
+        
         public static int FloorToClosestInt(this float number)
         {
             var decimalPart = number - (int) number;

@@ -1,0 +1,1 @@
+{"group":{"week":6,"start":"10.09.2019","end":"10.09.2021","tournamentId":"1","players":[{"uid":"10","name":"Simon","score":1000},{"uid":"11","name":"Joseph","score":2000},{"uid":"12","name":"Adam","score":2500},{"uid":"13","name":"Daisy","score":500},{"uid":"14","name":"onur","score":50000}]}}

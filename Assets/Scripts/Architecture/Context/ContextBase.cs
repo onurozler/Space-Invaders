@@ -12,11 +12,7 @@ namespace Architecture.Context
 
         protected virtual void Awake()
         {
-            if (IsCommonContext)
-            {
-                DontDestroyOnLoad(gameObject);
-            }
-            else
+            if(!IsCommonContext)
             {
                 _contextServiceLocator = new ServiceLocator.ServiceLocator();
                 _contextServiceLocator.SetParent(CommonServiceLocator);

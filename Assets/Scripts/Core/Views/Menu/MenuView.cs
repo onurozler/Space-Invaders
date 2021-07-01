@@ -20,6 +20,11 @@ namespace Core.Views.Menu
             squidScoreText.text = $"= {squidScore} POINTS";
         }
 
+        public void SetActive(bool isActive)
+        {
+            gameObject.SetActive(isActive);
+        }
+
         public void PlayButtonPressed()
         {
             OnPlayButtonPressed?.Invoke();

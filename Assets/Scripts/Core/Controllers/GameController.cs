@@ -1,46 +1,54 @@
 using System;
+using System.Linq;
 using Architecture.ServiceLocator;
-using Core.Models;
 using Core.Models.Enemy;
 using Core.Models.Game;
 using Core.Models.Game.Input;
 using Core.Models.Player;
+using Core.Models.Scene;
 using Core.Views.Game;
 using Helpers.Scene;
 using Helpers.Timing;
+using Network.WebNetworkService;
+using Network.WebNetworkService.Requests;
+using Network.WebNetworkService.Responses;
 using UnityEngine;
 
-namespace Core.Controllers.Impl
+namespace Core.Controllers
 {
     public class GameController : IDisposable
     {
         private readonly IGameView _gameView;
         private readonly ISceneStateHandler _sceneStateHandler;
-        private readonly ISceneController _sceneController;
         private readonly IGameInputData _gameInputData;
         private readonly ITimingManager _timingManager;
         private readonly GameAssetData _gameAssetData;
         private readonly EnemyFormationData _enemyFormationData;
         private readonly PlayerData _playerData;
+        private readonly SceneData _sceneData;
         private readonly Coroutine _interval;
+        private readonly IWebService _webService;
+        private readonly LeaderboardSubmitController _leaderboardSubmitController;
         private float _totalTime;
 
         public GameController(IServiceLocator serviceLocator)
         {
             _gameView = serviceLocator.Get<IGameView>();
-            _sceneController = serviceLocator.Get<ISceneController>();
             _sceneStateHandler = serviceLocator.Get<ISceneStateHandler>();
             _gameInputData = serviceLocator.Get<IGameInputData>();
             _enemyFormationData = serviceLocator.Get<EnemyFormationData>();
             _playerData = serviceLocator.Get<PlayerData>();
             _timingManager = serviceLocator.Get<ITimingManager>();
             _gameAssetData = serviceLocator.Get<GameAssetData>();
+            _sceneData = serviceLocator.Get<SceneData>();
+            _webService = serviceLocator.Get<IWebService>();
+            _leaderboardSubmitController = serviceLocator.Get<LeaderboardSubmitController>();
 
             _playerData.OnLivesChanged += OnLivesChanged;
             _playerData.OnScoreChanged += OnScoreChanged;
             _playerData.OnGameOver += OnGameOver;
             _enemyFormationData.OnAllEnemiesDestroyed += OnGameFinished;
-            _sceneStateHandler.OnUpdatedIgnoringPause += OnUpdated;
+            _sceneStateHandler.OnUpdated += OnUpdated;
             
             _gameView.FillData(_gameAssetData.ExtraBonusTotalTime);
             _totalTime = _gameAssetData.ExtraBonusTotalTime;
@@ -73,13 +81,27 @@ namespace Core.Controllers.Impl
 
         private void OnGameOver()
         {
-            _sceneController.Load(Constants.Scene.MenuName);
+            _sceneData.CurrentScene = SceneType.Menu;
         }
 
         private void OnGameFinished()
         {
             _playerData.Score += _playerData.ExtraScore;
-            _sceneController.Load(Constants.Scene.MenuName);
+            var leaderboardRequest = new WebLeaderboardRequest();
+            leaderboardRequest.Parameters.Add("country","tr");
+            
+            _webService.SendRequest<WebLeaderboardResponse>(leaderboardRequest, (response) =>
+            {
+                var lowestScoredPlayer = response.@group.players.OrderBy(x => x.score).ToList()[0];
+                if (_playerData.Score > lowestScoredPlayer.score)
+                {
+                    _leaderboardSubmitController.Show();
+                }
+                else
+                {
+                    _sceneData.CurrentScene = SceneType.Menu;
+                }
+            });
         }
 
         private void OnUpdated()
@@ -90,19 +112,18 @@ namespace Core.Controllers.Impl
                     _sceneStateHandler.PauseOrResume();
                     break;
                 case InputState.Quit:
-                    _sceneController.Load(Constants.Scene.MenuName);
+                    _sceneData.CurrentScene = SceneType.Menu;
                     break;
             }
         }
 
         public void Dispose()
         {
-            _timingManager.Stop(_interval);
             _playerData.OnLivesChanged -= OnLivesChanged;
             _playerData.OnScoreChanged -= OnScoreChanged;
             _playerData.OnGameOver -= OnGameOver;
             _enemyFormationData.OnAllEnemiesDestroyed -= OnGameFinished;
-            _sceneStateHandler.OnUpdatedIgnoringPause -= OnUpdated;
+            _sceneStateHandler.OnUpdated -= OnUpdated;
         }
     }
 }
