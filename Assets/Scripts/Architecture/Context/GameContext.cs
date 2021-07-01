@@ -38,6 +38,9 @@ namespace Architecture.Context
 #else
             serviceLocator.Add<IGameInputData>(new KeyboardInputData());
 #endif
+            var mainCamera = Camera.main;
+            serviceLocator.Add(mainCamera);
+            serviceLocator.Add(new ScreenData(mainCamera));
             serviceLocator.Add(new EnemyFormationData());
             serviceLocator.Add(new PlayerData());
             

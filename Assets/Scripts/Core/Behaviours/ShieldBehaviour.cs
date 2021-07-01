@@ -2,7 +2,7 @@
 
 namespace Core.Behaviours
 {
-    public class ShieldBehaviour : MonoBehaviour, IKillableBehaviour
+    public class ShieldBehaviour : MonoBehaviour
     {
         [Header("Runtime Data")]
         public int Tolerance;

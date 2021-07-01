@@ -5,44 +5,36 @@ namespace Helpers
     [ExecuteAlways]
     public class ResolutionHelper : MonoBehaviour
     {
-        [SerializeField] 
-        private Camera mainCamera;
-
-        [SerializeField] 
-        private float targetRatio = 1080 / 1920f;
+        private int _resolutionX;
+        private int _resolutionY;
+        
+        private void Awake()
+        {
+            _resolutionX = Screen.width;
+            _resolutionY = Screen.height;
+        }
 
         private void Update()
         {
-            //Debug.Log( mainCamera.WorldToScreenPoint(FindObjectOfType<EnemiesManager>().transform.position));
-           
-
-            /*var currentRatio = Screen.width / (float)Screen.height;
-            var scaleHeight = currentRatio / targetRatio;
-
-            if (scaleHeight < 1.0f)
+            if (_resolutionX != Screen.width || _resolutionY != Screen.height)
             {
-                Rect rect = mainCamera.rect;
-
-                rect.width = 1.0f;
-                rect.height = scaleHeight;
-                rect.x = 0;
-                rect.y = (1.0f - scaleHeight) / 2.0f;
-
-                mainCamera.rect = rect;
+                _resolutionX = Screen.width;
+                _resolutionY = Screen.height;
+                
+                SetOrthographicSize();
             }
-            else 
+        }
+
+        public void SetOrthographicSize()
+        {
+            if ((float)_resolutionX / _resolutionY < 1)
             {
-                var scaleWidth = 1.0f / scaleHeight;
-
-                Rect rect = mainCamera.rect;
-
-                rect.width = scaleWidth;
-                rect.height = 1.0f;
-                rect.x = (1.0f - scaleWidth) / 2.0f;
-                rect.y = 0;
-
-                mainCamera.rect = rect;
-            }*/
+                Camera.main.orthographicSize = 15f;
+            }
+            else
+            {
+                Camera.main.orthographicSize = 7f;
+            }
         }
     }
 }

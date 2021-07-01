@@ -27,8 +27,6 @@ namespace Core.Controllers
             _sceneStateHandler = serviceLocator.Get<ISceneStateHandler>();
             
             _shootLogicInterval = _timingManager.SetInterval(2f, -1, OnShootLogicUpdated);
-
-            _sceneStateHandler.OnUpdated += OnEnemiesMovement;
         }
         
         private void OnShootLogicUpdated()
@@ -40,15 +38,8 @@ namespace Core.Controllers
             }
         }
         
-        
-        private void OnEnemiesMovement()
-        {
-            
-        }
-        
         public void Dispose()
         {
-            _sceneStateHandler.OnUpdated -= OnEnemiesMovement;
         }
     }
 }

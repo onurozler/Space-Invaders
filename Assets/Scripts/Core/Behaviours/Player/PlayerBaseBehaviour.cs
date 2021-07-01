@@ -1,6 +1,7 @@
 using Architecture.ServiceLocator;
 using Core.Managers;
 using Core.Models.Bullet;
+using Core.Models.Game;
 using Core.Models.Game.Input;
 using Core.Models.Player;
 using Helpers.Scene;
@@ -23,6 +24,7 @@ namespace Core.Behaviours.Player
         private BulletManager _bulletManager;
         private ITimingManager _timingManager;
         private PlayerData _playerData;
+        private ScreenBoundary _screenWidthBoundary;
         private bool _canShoot;
         
         public void Initialize(IServiceLocator serviceLocator)
@@ -32,6 +34,7 @@ namespace Core.Behaviours.Player
             _bulletManager = serviceLocator.Get<BulletManager>();
             _timingManager = serviceLocator.Get<ITimingManager>();
             _playerData = serviceLocator.Get<PlayerData>();
+            _screenWidthBoundary = serviceLocator.Get<ScreenData>().GetWidthBoundary();
             _canShoot = true;
             _sceneStateHandler.OnUpdated += OnUpdated;
         }
@@ -39,13 +42,19 @@ namespace Core.Behaviours.Player
         private void OnUpdated()
         {
             _playerData.Lives = Lives;
-            
+
             switch (_gameInputData.FirstInput)
             {
                 case InputState.Left:
+                    if (transform.position.x < _screenWidthBoundary.Min + 0.5f)
+                        return;
+
                     transform.Translate(Vector3.left * Time.deltaTime * Speed);
                     break;
                 case InputState.Right:
+                    if (transform.position.x > _screenWidthBoundary.Max - 0.5f)
+                        return;
+                    
                     transform.Translate(Vector3.right * Time.deltaTime * Speed);
                     break;
             }

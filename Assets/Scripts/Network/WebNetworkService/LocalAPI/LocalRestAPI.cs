@@ -94,6 +94,7 @@ namespace Network.WebNetworkService.LocalAPI
                     leaderboard.@group.players = players.ToArray();
                     File.WriteAllText(AssetDatabase.GetAssetPath(_textDatabase), JsonUtility.ToJson(leaderboard));
                     EditorUtility.SetDirty(_textDatabase);
+                    AssetDatabase.Refresh();
                     taskCompletionSource.SetResult(JsonUtility.ToJson(new WebLeaderboardSubmitResponse{code = 1}));
                 }
             }

@@ -10,11 +10,13 @@ namespace Core.Controllers
     public class SceneController : IDisposable
     {
         private readonly SceneData _sceneData;
+        private readonly ResolutionHelper _resolutionHelper;
         private AsyncOperation _currentLoadOperation;
             
         public SceneController(IServiceLocator serviceLocator)
         {
             _sceneData = serviceLocator.Get<SceneData>();
+            _resolutionHelper = serviceLocator.Get<ResolutionHelper>();
             _sceneData.OnSceneChanged += OnSceneChanged;
         }
 
@@ -25,6 +27,7 @@ namespace Core.Controllers
                 _currentLoadOperation = SceneManager.LoadSceneAsync(currentScene.TypeToName());
                 _currentLoadOperation.completed += operation =>
                 {
+                    _resolutionHelper.SetOrthographicSize();
                     SceneManager.SetActiveScene(SceneManager.GetSceneByName(currentScene.TypeToName()));
                 };
             }

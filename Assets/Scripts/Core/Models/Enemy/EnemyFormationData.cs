@@ -33,7 +33,7 @@ namespace Core.Models.Enemy
                 {
                     _enemyDatas[x, y] = new EnemyData
                     {
-                        Type = (EnemyType) ((yDimension - y) / 3f).FloorToClosestInt(),
+                        Type = FindType(y),
                         Color = Constants.Enemy.Colors.GetRandom()
                     };
                     
@@ -118,7 +118,20 @@ namespace Core.Models.Enemy
             
             return currentEnemyData != null && currentEnemyData.Color == enemyData.Color && currentEnemyData.Type == enemyData.Type;
         }
-        
+
+        private EnemyType FindType(int yPosition)
+        {
+            if (yPosition < 2)
+            {
+                return EnemyType.Squid;
+            }
+            if (yPosition < 4)
+            {
+                return EnemyType.Crab;
+            }
+
+            return EnemyType.Octopus;
+        }
         
         #endregion
     }
