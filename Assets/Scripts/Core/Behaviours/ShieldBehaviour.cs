@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.Behaviours
 {
@@ -7,14 +8,16 @@ namespace Core.Behaviours
         [Header("Runtime Data")]
         public int Tolerance;
 
+        private IEnumerable<ShieldPieceBehaviour> _shieldPieces;
+
         public void Initialize()
         {
-            
+            _shieldPieces = GetComponentsInChildren<ShieldPieceBehaviour>();
+            foreach (var shieldPiece in _shieldPieces)
+            {
+                shieldPiece.Initialize(Tolerance);
+            }
         }
         
-        public void Kill()
-        {
-            
-        }
     }
 }

@@ -23,11 +23,11 @@ namespace Core.Managers
         private PlayerData _playerData;
         private ScreenData _screenData;
 
-        private IList<IMoveableBehaviour> _activeMoveables;
+        private IList<ShipBehaviour> _activeShips;
         
         public void Initialize(IServiceLocator serviceLocator)
         {
-            _activeMoveables = new List<IMoveableBehaviour>();
+            _activeShips = new List<ShipBehaviour>();
             _shipAssetDatas = serviceLocator.Get<IList<ShipAssetData>>();
             _timingManager = serviceLocator.Get<ITimingManager>();
             _sceneStateHandler = serviceLocator.Get<ISceneStateHandler>();
@@ -42,9 +42,9 @@ namespace Core.Managers
 
         private void OnUpdated()
         {
-            foreach (var moveable in _activeMoveables)
+            foreach (var ship in _activeShips)
             {
-                moveable.Move();
+                ship.Move();
             }
         }
 
@@ -55,12 +55,12 @@ namespace Core.Managers
             ship.SetPositionAndDirection(new Vector3(_screenData.GetWidthBoundary().Min - 2f,6,0),Vector3.right);
             ship.OnDestroyed += OnShipDestroyed;
             
-            _activeMoveables.Add(ship);
+            _activeShips.Add(ship);
         }
 
         private void OnShipDestroyed(ShipBehaviour shipBehaviour, bool destroyedItself)
         {
-            _activeMoveables.Remove(shipBehaviour);
+            _activeShips.Remove(shipBehaviour);
             if(destroyedItself)
                 return;
             

@@ -8,9 +8,9 @@ using Helpers.Scene;
 using Helpers.Timing;
 using UnityEngine;
 
-namespace Core.Behaviours.Player
+namespace Core.Behaviours
 {
-    public class PlayerBaseBehaviour : MonoBehaviour, IKillableBehaviour
+    public class PlayerBehaviour : MonoBehaviour, IKillableBehaviour
     {
         [Header("Runtime Data")]
         [Range(2,10)]

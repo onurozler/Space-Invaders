@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GameSpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 6bbfc7b00a5fb45c7af387e45d91a6fe, type: 3}
+    totalSpriteSurfaceArea: 48840
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: a6a2d27059997af43b0160ed934f4eb2, type: 3}
+  - {fileID: 21300000, guid: 73423019496d24228b1a501e3a4e93c0, type: 3}
+  - {fileID: 21300000, guid: 79c490db2dd404ec6b15fdc59333c688, type: 3}
+  - {fileID: -778471311582434123, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: -3814946934177667163, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: 2207119594929711323, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: -647801311683064894, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: -1079473999873960774, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: -8022620209553118723, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  - {fileID: 4694393289760499848, guid: 7f01eadd7026a4fe1bd7964e7144c9fa, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Splat
+  - Missile
+  - Player
+  - EnemiesTexture_6
+  - EnemiesTexture_5
+  - EnemiesTexture_4
+  - EnemiesTexture_3
+  - EnemiesTexture_2
+  - EnemiesTexture_1
+  - EnemiesTexture_0
+  m_Tag: GameSpriteAtlas
+  m_IsVariant: 0

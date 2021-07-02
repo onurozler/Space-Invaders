@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Architecture.ServiceLocator;
-using Core.Behaviours.Player;
+using Core.Behaviours;
 using Core.Controllers;
 using Core.Managers;
 using Core.Models.Enemy;
@@ -22,7 +22,7 @@ namespace Architecture.Context
         [SerializeField] private GameAssetData gameAssetData;
         
         [Header("Others")]
-        [SerializeField] private PlayerBaseBehaviour player;
+        [SerializeField] private PlayerBehaviour player;
         [SerializeField] private ShipsManager shipsManager;
         [SerializeField] private ShieldsManager shieldsManager;
         [SerializeField] private BulletManager bulletManager;

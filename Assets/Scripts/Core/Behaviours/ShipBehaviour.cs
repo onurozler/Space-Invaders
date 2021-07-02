@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Behaviours
 {
-    public class ShipBehaviour : MonoBehaviour, IKillableBehaviour, IMoveableBehaviour
+    public class ShipBehaviour : MonoBehaviour, IKillableBehaviour
     {
         [SerializeField]
         private SpriteRenderer spriteRenderer;

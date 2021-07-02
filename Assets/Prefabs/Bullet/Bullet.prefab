@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 5467886581701233753}
-  enemyBullet: {fileID: 0}
-  playerBullet: {fileID: 0}
+  enemyBullet: {fileID: 21300000, guid: 73423019496d24228b1a501e3a4e93c0, type: 3}
+  playerBullet: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!58 &-2168660655711441176
 CircleCollider2D:
   m_ObjectHideFlags: 0

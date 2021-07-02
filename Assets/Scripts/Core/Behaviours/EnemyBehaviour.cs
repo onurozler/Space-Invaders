@@ -1,17 +1,16 @@
 ﻿using System;
 using Core.Models.Enemy;
-using Core.Models.Game;
 using UnityEngine;
 
-namespace Core.Behaviours.Enemy
+namespace Core.Behaviours
 {
-    public class EnemyBaseBehaviour : MonoBehaviour, IKillableBehaviour
+    public class EnemyBehaviour : MonoBehaviour, IKillableBehaviour
     {
         [Header("Components")]
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
-        public event Action<EnemyBaseBehaviour> OnEnemyKilled; 
+        public event Action<EnemyBehaviour> OnEnemyKilled; 
         public Vector2Int Position { get; private set; }
         public int Score { get; private set; }
         public Sprite[] enemyAnim;

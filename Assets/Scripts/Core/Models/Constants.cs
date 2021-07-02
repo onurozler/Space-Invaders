@@ -16,6 +16,7 @@ namespace Core.Models
             public const int PlayerLayer = 9;
             public const int EnemyLayer = 8;
             public const float BulletSpeed = 7f;
+            public const int ShieldCount = 3;
         }
 
         public static class Enemy

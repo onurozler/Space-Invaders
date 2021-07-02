@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Architecture.ServiceLocator;
-using Core.Behaviours.Enemy;
+using Core.Behaviours;
 using Core.Models;
 using Core.Models.Enemy;
 using Core.Models.Game;
@@ -18,7 +18,7 @@ namespace Core.Managers
         [Range(0,0.05f)]
         private float pacing;
         
-        public IDictionary<Vector2Int, EnemyBaseBehaviour> SpawnedEnemies { get; private set; }
+        public IDictionary<Vector2Int, EnemyBehaviour> SpawnedEnemies { get; private set; }
         
         private IList<EnemyAssetData> _enemyAssetDatas;
         private EnemyFormationData _enemyFormationData;
@@ -30,7 +30,7 @@ namespace Core.Managers
         
         public void Initialize(IServiceLocator serviceLocator)
         {
-            SpawnedEnemies = new Dictionary<Vector2Int, EnemyBaseBehaviour>();
+            SpawnedEnemies = new Dictionary<Vector2Int, EnemyBehaviour>();
 
             _isRightDirection = true;
             _enemyAssetDatas = serviceLocator.Get<IList<EnemyAssetData>>();
@@ -55,7 +55,7 @@ namespace Core.Managers
                     var enemyAssetData = _enemyAssetDatas.GetByType(enemyData.Type);
 
                     var dataPosition = new Vector2Int(x, y);
-                    var enemyBase = GetItem<EnemyBaseBehaviour>();
+                    var enemyBase = GetItem<EnemyBehaviour>();
                     enemyBase.Initialize(enemyAssetData, enemyData.Color,dataPosition);
                     enemyBase.OnEnemyKilled += OnEnemyKilled;
                     
@@ -103,7 +103,7 @@ namespace Core.Managers
             }
         }
 
-        private void OnEnemyKilled(EnemyBaseBehaviour enemy)
+        private void OnEnemyKilled(EnemyBehaviour enemy)
         {
             var connectedEnemies = _enemyFormationData.GetConnectedEnemies(enemy.Position);
             foreach (var connectedEnemyPosition in connectedEnemies)

@@ -27,7 +27,8 @@ namespace Core.Behaviours
             _sceneStateHandler = sceneStateHandler;
             var isPlayerBullet = bulletType == BulletType.Player;
             gameObject.layer = isPlayerBullet ? Constants.Game.PlayerLayer : Constants.Game.EnemyLayer;
-            //spriteRenderer.sprite = bulletType == BulletType.Player ? playerBullet : enemyBullet;
+            spriteRenderer.sprite = bulletType == BulletType.Player ? playerBullet : enemyBullet;
+            spriteRenderer.color = bulletType == BulletType.Player ? Color.white : Color.green;
             _sceneStateHandler.OnUpdated += OnUpdated;
         }
 
